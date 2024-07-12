@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import Map from '../components/Map';
 import {
@@ -10,6 +10,7 @@ import SelectIcon from '@mui/icons-material/CheckCircle';
 
 const TripPlannerPage = () => {
     const [trips, setTrips] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
     const [newTrip, setNewTrip] = useState({ departure: '', departureLatitude: 0, departureLongitude: 0, destination: '', destinationLatitude: 0, destinationLongitude: 0, startDate: '', endDate: '' });
     const [selectedTrip, setSelectedTrip] = useState(null);
 
@@ -29,7 +30,7 @@ const TripPlannerPage = () => {
                 return;
             }
             try {
-                const response = await axios.get('http://localhost:5001/api/trips', {
+                const response = await axios.get('http://localhost:5005/api/trips', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setTrips(response.data);
@@ -71,8 +72,41 @@ const TripPlannerPage = () => {
         });
     }, []);
 
-    const handleAddTrip = async (e) => {
+    const fetchImage = async (city) => {
+        try {
+          const searchUrl = `https://www.googleapis.com/customsearch/v1?key=AIzaSyAiiUiYqubkFaJ3wATy6IzxE1t4Lcsy2Tc&cx=5704e4a85be1e4f8e&searchType=image&q=${city}&num=1`;
+  
+          const response = await axios.get(searchUrl);
+          const images = response.data.items;
+          if (images && images.length > 0) {
+            return images[0].link;
+          }
+        } catch (error) {
+          console.error('Error fetching image:', error);
+        }
+      };
+
+    useEffect(() => {
+        if (trips?.length > 0 && !imageUrls.length) {
+            (async () => {
+                const urls = await Promise.all(trips.map(async (trip) => {
+                    const imageUrl = await fetchImage(encodeURI(`city ${trip.destination}`));
+                    return { id: trip._id, imageUrl };
+                }));
+
+                setImageUrls(urls);
+            })();
+        }
+    }, [trips]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const buttonName = e.nativeEvent.submitter.name;
+        if (buttonName === 'clear-selected-trip') {
+            setSelectedTrip(null);
+            return;
+        }
+
         let token = null;
         try {
             token = localStorage.getItem('token');
@@ -84,7 +118,7 @@ const TripPlannerPage = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5001/api/trips', newTrip, {
+            const response = await axios.post('http://localhost:5005/api/trips', newTrip, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTrips([...trips, response.data]);
@@ -106,7 +140,7 @@ const TripPlannerPage = () => {
             return;
         }
         try {
-            await axios.delete(`http://localhost:5001/api/trips/${tripId}`, {
+            await axios.delete(`http://localhost:5005/api/trips/${tripId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTrips(trips.filter(trip => trip._id !== tripId));
@@ -120,16 +154,31 @@ const TripPlannerPage = () => {
     };
 
     const markers = trips.flatMap(trip => [
-        { position: { lat: trip.departureLatitude, lng: trip.departureLongitude }, title: `Departure: ${trip.departure}` },
-        { position: { lat: trip.destinationLatitude, lng: trip.destinationLongitude }, title: `Destination: ${trip.destination}` },
+        new window.google.maps.Marker({
+            position: { lat: trip.departureLatitude, lng: trip.departureLongitude },
+        }),
+        new window.google.maps.Marker({
+            position: { lat: trip.destinationLatitude, lng: trip.destinationLongitude },
+        })
     ]);
+
+    const getCardImage = useCallback((tripId) => {
+        if (!tripId || !imageUrls) return null;
+        return (
+            <CardMedia
+            component="img"
+            image={imageUrls.find(url => url.id === tripId)?.imageUrl || ''}
+            alt={tripId?.destination}
+        />
+        );
+    }, [imageUrls]);
 
     return (
         <Box sx={{ mt: 4 }}>
             <Typography variant="h4" component="h2" gutterBottom>
                 My Trips
             </Typography>
-            <Box component="form" onSubmit={handleAddTrip} sx={{ mb: 2 }}>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mb: 2 }}>
                 <TextField
                     margin="normal"
                     required
@@ -168,21 +217,21 @@ const TripPlannerPage = () => {
                     value={newTrip.endDate}
                     onChange={(e) => setNewTrip({ ...newTrip, endDate: e.target.value })}
                 />
-                <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                <Button name="add-trip" type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
                     Add Trip
                 </Button>
+                {selectedTrip && (
+                    <Button name="clear-selected-trip" type="submit" variant="contained" formNoValidate color="primary" sx={{ mt: 2 }} style={{marginLeft: '10px'}}>
+                        Clear Selection
+                    </Button>
+                )}
             </Box>
 
             <Grid container spacing={4}>
                 {trips.map((trip) => (
                     <Grid item key={trip._id} xs={12} sm={6} md={4}>
                         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                            <CardMedia
-                                component="img"
-                                image="https://source.unsplash.com/random"
-                                alt={trip.destination}
-                                sx={{ pt: '56.25%' }}
-                            />
+                            { getCardImage(trip?._id) }
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography gutterBottom variant="h5" component="h2">
                                     {trip.destination}
@@ -199,7 +248,7 @@ const TripPlannerPage = () => {
                                     <DeleteIcon />
                                 </IconButton>
                                 <IconButton edge="end" aria-label="select" onClick={() => handleSelectTrip(trip)}>
-                                    <SelectIcon />
+                                    <SelectIcon color={selectedTrip?._id === trip?._id ? 'primary' : undefined} />
                                 </IconButton>
                             </CardActions>
                         </Card>
@@ -225,7 +274,9 @@ const TripPlannerPage = () => {
                 </Box>
             )}
 
-            <Map center={{ lat: 0, lng: 0 }} zoom={2} markers={markers} />
+            {!selectedTrip && (
+                <Map center={{ lat: 0, lng: 0 }} zoom={2} markers={markers} />
+            )}
         </Box>
     );
 

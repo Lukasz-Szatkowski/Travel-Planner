@@ -6,8 +6,6 @@ import {
     Button,
     CssBaseline,
     TextField,
-    FormControlLabel,
-    Checkbox,
     Link,
     Grid,
     Box,
@@ -16,6 +14,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { SERVER_URL } from '../consts';
 import './SignupPage.css'; // Importowanie pliku CSS
 
 function Copyright(props) {
@@ -43,7 +42,7 @@ export default function SignUp() {
         event.preventDefault();
         try {
             console.log('Sending signup request...');
-            const response = await axios.post('http://localhost:5001/api/signup', { email, password });
+            const response = await axios.post(`${SERVER_URL}/api/signup`, { email, password });
             console.log('Signup successful:', response.data);
             navigate('/login');
         } catch (error) {
