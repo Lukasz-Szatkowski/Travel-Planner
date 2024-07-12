@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import './SignupPage.css'; // Importowanie pliku CSS
 
 function Copyright(props) {
     return (
@@ -51,9 +52,13 @@ export default function SignUp() {
         }
     };
 
+    const handleBackToHome = () => {
+        navigate('/');
+    };
+
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className="signup-container">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -61,12 +66,16 @@ export default function SignUp() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        padding: '20px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" sx={{ color: 'black' }}>
                         Sign up
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
@@ -82,6 +91,7 @@ export default function SignUp() {
                                     autoFocus
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    sx={{ backgroundColor: 'white', borderRadius: '4px' }}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -95,12 +105,7 @@ export default function SignUp() {
                                     autoComplete="new-password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
+                                    sx={{ backgroundColor: 'white', borderRadius: '4px' }}
                                 />
                             </Grid>
                         </Grid>
@@ -119,14 +124,22 @@ export default function SignUp() {
                         )}
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/login" variant="body2">
+                                <Link href="/login" variant="body2" sx={{ color: 'black' }}>
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
                         </Grid>
+                        <Button
+                            variant="text"
+                            fullWidth
+                            onClick={handleBackToHome}
+                            sx={{ mt: 2 }}
+                        >
+                            Back to Home
+                        </Button>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5, color: 'black' }} />
             </Container>
         </ThemeProvider>
     );

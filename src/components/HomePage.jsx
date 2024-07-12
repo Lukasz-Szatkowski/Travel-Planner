@@ -43,22 +43,36 @@ function HomePage() {
                 {/* Hero unit */}
                 <Box
                     sx={{
-                        bgcolor: 'lightblue',
                         pt: 8,
                         pb: 6,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: '60vh',
+                        textAlign: 'center',
+                        color: 'white',
+                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
                     }}
                 >
-                    <Container maxWidth="sm">
+                    <Container
+                        maxWidth="sm"
+                        sx={{
+                            background: 'rgba(0, 0, 0, 0.5)',
+                            padding: '20px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        }}
+                    >
                         <Typography
                             component="h1"
                             variant="h2"
                             align="center"
-                            color="text.primary"
+                            color="inherit"
                             gutterBottom
                         >
                             Welcome to Travel Planner
                         </Typography>
-                        <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                        <Typography variant="h5" align="center" color="inherit" paragraph>
                             Plan your next trip with ease and explore the world!
                         </Typography>
                         <Stack
@@ -73,7 +87,7 @@ function HomePage() {
                     </Container>
                 </Box>
                 {/* End hero unit */}
-                <Box sx={{ bgcolor: 'lightgray', py: 8 }}>
+                <Box sx={{ bgcolor: 'rgba(255, 255, 255, 0.8)', py: 8 }}>
                     <Container maxWidth="md">
                         {/* Feature section */}
                         <Typography variant="h4" align="center" gutterBottom>
@@ -113,7 +127,7 @@ function HomePage() {
                 {/* Testimonials section */}
                 <Box
                     sx={{
-                        bgcolor: 'lightgreen',
+                        bgcolor: 'rgba(255, 255, 255, 0.8)',
                         pt: 8,
                         pb: 6,
                     }}
@@ -145,9 +159,9 @@ function HomePage() {
                 {/* End testimonials section */}
             </main>
             {/* Footer */}
-            <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+            <Box sx={{ bgcolor: 'rgba(255, 255, 255, 0.8)', p: 6 }} component="footer">
                 <Typography variant="h6" align="center" gutterBottom>
-                    Footer
+                    Travel Planner
                 </Typography>
                 <Typography
                     variant="subtitle1"
@@ -155,7 +169,7 @@ function HomePage() {
                     color="text.secondary"
                     component="p"
                 >
-                    Something here to give the footer a purpose!
+                    Your next adventure is just ahead!
                 </Typography>
                 <Copyright />
             </Box>
@@ -169,7 +183,7 @@ function Copyright() {
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                Travel Planner
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}

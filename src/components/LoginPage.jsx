@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import './LoginPage.css'; // Importowanie pliku CSS
 
 function Copyright(props) {
     return (
@@ -52,9 +53,13 @@ export default function SignIn() {
         }
     };
 
+    const handleBackToHome = () => {
+        navigate('/');
+    };
+
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className="signin-container">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -62,12 +67,16 @@ export default function SignIn() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        padding: '20px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                     }}
                 >
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" sx={{ color: 'black' }}>
                         Sign in
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -82,6 +91,7 @@ export default function SignIn() {
                             autoFocus
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            sx={{ backgroundColor: 'white', borderRadius: '4px' }}
                         />
                         <TextField
                             margin="normal"
@@ -94,6 +104,7 @@ export default function SignIn() {
                             autoComplete="current-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            sx={{ backgroundColor: 'white', borderRadius: '4px' }}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
@@ -114,19 +125,27 @@ export default function SignIn() {
                         )}
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link href="#" variant="body2" sx={{ color: 'black' }}>
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="/signup" variant="body2">
+                                <Link href="/signup" variant="body2" sx={{ color: 'black' }}>
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
                         </Grid>
+                        <Button
+                            variant="text"
+                            fullWidth
+                            onClick={handleBackToHome}
+                            sx={{ mt: 2 }}
+                        >
+                            Back to Home
+                        </Button>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{ mt: 8, mb: 4, color: 'black' }} />
             </Container>
         </ThemeProvider>
     );
