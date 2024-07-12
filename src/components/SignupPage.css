@@ -4,12 +4,12 @@ html, body, #root {
     padding: 0;
 }
 
-body {
+/* body {
     background-image: url('../../src/img/background.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
+} */
 
 .signup-container {
     display: flex;
