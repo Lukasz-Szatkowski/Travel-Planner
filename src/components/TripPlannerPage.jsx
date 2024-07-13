@@ -30,7 +30,7 @@ const TripPlannerPage = () => {
                 return;
             }
             try {
-                const response = await axios.get('http://localhost:5005/api/trips', {
+                const response = await axios.get('http://localhost:5001/api/trips', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setTrips(response.data);
@@ -118,7 +118,7 @@ const TripPlannerPage = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5005/api/trips', newTrip, {
+            const response = await axios.post('http://localhost:5001/api/trips', newTrip, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTrips([...trips, response.data]);
@@ -140,7 +140,7 @@ const TripPlannerPage = () => {
             return;
         }
         try {
-            await axios.delete(`http://localhost:5005/api/trips/${tripId}`, {
+            await axios.delete(`http://localhost:5001/api/trips/${tripId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTrips(trips.filter(trip => trip._id !== tripId));
@@ -217,11 +217,11 @@ const TripPlannerPage = () => {
                     value={newTrip.endDate}
                     onChange={(e) => setNewTrip({ ...newTrip, endDate: e.target.value })}
                 />
-                <Button name="add-trip" type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+                <Button name="add-trip" type="submit" variant="contained" color="primary" sx={{ mt: 2 }} style={{marginBottom: '50px'}}>
                     Add Trip
                 </Button>
                 {selectedTrip && (
-                    <Button name="clear-selected-trip" type="submit" variant="contained" formNoValidate color="primary" sx={{ mt: 2 }} style={{marginLeft: '10px'}}>
+                    <Button name="clear-selected-trip" type="submit" variant="contained" formNoValidate color="primary" sx={{ mt: 2 }} style={{marginLeft: '10px', marginBottom:'50px'}}>
                         Clear Selection
                     </Button>
                 )}

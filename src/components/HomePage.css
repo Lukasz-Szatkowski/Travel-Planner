@@ -1,0 +1,7 @@
+.background {
+    background-image: url('../../src/img/background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
+    height: 100vh;
+}

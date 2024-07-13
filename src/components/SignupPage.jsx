@@ -57,11 +57,11 @@ export default function SignUp() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+            <Container className='background' maxWidth="100%">
             <Container component="main" maxWidth="xs" className="signup-container">
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -139,6 +139,7 @@ export default function SignUp() {
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 5, color: 'black' }} />
+            </Container>
             </Container>
         </ThemeProvider>
     );

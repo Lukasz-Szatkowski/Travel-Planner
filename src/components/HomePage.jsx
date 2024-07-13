@@ -40,6 +40,7 @@ function HomePage() {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <Container className='background' maxWidth="100%">
             <main>
                 {/* Hero unit */}
                 <Box
@@ -87,49 +88,6 @@ function HomePage() {
                     </Container>
                 </Box>
                 {/* End hero unit */}
-                <Box>
-                    <Container maxWidth="md">
-                        {/* Feature section */}
-                        <Typography variant="h4" align="center" gutterBottom color="white">
-                            Features
-                        </Typography>
-                        <Grid container spacing={4}>
-                            {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={4}>
-                                    <Card
-                                        sx={{
-                                            height: '100%',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                                            borderRadius: '8px',
-                                        }}
-                                    >
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ pt: '56.25%' }}
-                                            image="https://source.unsplash.com/random"
-                                            alt="random"
-                                        />
-                                        <CardContent sx={{ flexGrow: 1 }}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                Feature {card}
-                                            </Typography>
-                                            <Typography>
-                                                This is a feature description. You can use this section to describe the feature.
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button size="small">View</Button>
-                                            <Button size="small">Edit</Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Container>
-                </Box>
-                {/* End feature section */}
                 {/* Testimonials section */}
                 <Box
                     sx={{
@@ -165,13 +123,14 @@ function HomePage() {
                 </Box>
                 {/* End testimonials section */}
             </main>
+            </Container>
             {/* Footer */}
             <Box
                 sx={{
                     p: 6,
                     color: 'black',
                     textAlign: 'center',
-                    bgcolor: 'rgba(255, 255, 255, 0.8)',
+                    bgcolor: 'grey',
                 }}
                 component="footer"
             >

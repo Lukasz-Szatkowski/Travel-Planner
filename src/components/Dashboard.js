@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,13 +10,12 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import Button from '@mui/material/Button';
 import { mainListItems, secondaryListItems } from './listItems';
 import TripPlannerPage from './TripPlannerPage'; // Import your TripPlannerPage component
 
@@ -69,8 +69,14 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
     const [open, setOpen] = React.useState(true);
+    const navigate = useNavigate();
+
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const handleBackToHome = () => {
+        navigate('/');
     };
 
     return (
@@ -104,11 +110,9 @@ function DashboardContent() {
                         >
                             Dashboard
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <Button color="inherit" onClick={handleBackToHome}>
+                            Go to Home
+                        </Button>
                     </Toolbar>
                 </AppBarStyled>
                 <DrawerStyled variant="permanent" open={open}>
