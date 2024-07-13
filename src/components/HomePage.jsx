@@ -15,6 +15,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import './HomePage.css'; // Importowanie pliku CSS
 
 const cards = [1, 2, 3];
 
@@ -39,6 +40,7 @@ function HomePage() {
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <Container className='background' maxWidth="100%">
             <main>
                 {/* Hero unit */}
                 <Box
@@ -50,14 +52,13 @@ function HomePage() {
                         justifyContent: 'center',
                         minHeight: '60vh',
                         textAlign: 'center',
-                        color: 'white',
-                        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
+                        color: 'black',
                     }}
                 >
                     <Container
                         maxWidth="sm"
                         sx={{
-                            background: 'rgba(0, 0, 0, 0.5)',
+                            background: 'rgba(255, 255, 255, 0.8)',
                             padding: '20px',
                             borderRadius: '8px',
                             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -87,49 +88,13 @@ function HomePage() {
                     </Container>
                 </Box>
                 {/* End hero unit */}
-                <Box sx={{ bgcolor: 'rgba(255, 255, 255, 0.8)', py: 8 }}>
-                    <Container maxWidth="md">
-                        {/* Feature section */}
-                        <Typography variant="h4" align="center" gutterBottom>
-                            Features
-                        </Typography>
-                        <Grid container spacing={4}>
-                            {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={4}>
-                                    <Card
-                                        sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                    >
-                                        <CardMedia
-                                            component="img"
-                                            sx={{ pt: '56.25%' }}
-                                            image="https://source.unsplash.com/random"
-                                            alt="random"
-                                        />
-                                        <CardContent sx={{ flexGrow: 1 }}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                Feature {card}
-                                            </Typography>
-                                            <Typography>
-                                                This is a feature description. You can use this section to describe the feature.
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button size="small">View</Button>
-                                            <Button size="small">Edit</Button>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Container>
-                </Box>
-                {/* End feature section */}
                 {/* Testimonials section */}
                 <Box
                     sx={{
-                        bgcolor: 'rgba(255, 255, 255, 0.8)',
                         pt: 8,
                         pb: 6,
+                        bgcolor: 'rgba(255, 255, 255, 0.8)',
+                        color: 'black',
                     }}
                 >
                     <Container maxWidth="md">
@@ -138,7 +103,7 @@ function HomePage() {
                         </Typography>
                         <Grid container spacing={4}>
                             <Grid item xs={12} md={6}>
-                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                <Paper elevation={3} sx={{ padding: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
                                     <Typography variant="h6" gutterBottom>
                                         John Doe
                                     </Typography>
@@ -146,7 +111,7 @@ function HomePage() {
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                <Paper elevation={3} sx={{ padding: 2, backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
                                     <Typography variant="h6" gutterBottom>
                                         Jane Smith
                                     </Typography>
@@ -158,15 +123,24 @@ function HomePage() {
                 </Box>
                 {/* End testimonials section */}
             </main>
+            </Container>
             {/* Footer */}
-            <Box sx={{ bgcolor: 'rgba(255, 255, 255, 0.8)', p: 6 }} component="footer">
+            <Box
+                sx={{
+                    p: 6,
+                    color: 'black',
+                    textAlign: 'center',
+                    bgcolor: 'grey',
+                }}
+                component="footer"
+            >
                 <Typography variant="h6" align="center" gutterBottom>
                     Travel Planner
                 </Typography>
                 <Typography
                     variant="subtitle1"
                     align="center"
-                    color="text.secondary"
+                    color="inherit"
                     component="p"
                 >
                     Your next adventure is just ahead!

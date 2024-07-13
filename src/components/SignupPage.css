@@ -4,11 +4,12 @@ html, body, #root {
     padding: 0;
 }
 
-body {
+.background {
     background-image: url('../../src/img/background.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 100vh;
 }
 
 .signup-container {
@@ -16,4 +17,5 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%;
+    padding-top: 64px;
 }
